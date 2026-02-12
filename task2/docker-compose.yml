@@ -1,24 +1,28 @@
-version: "3.8"
 services:
     generator:
+        build: ./generator
+        volumes:
+            - raw:/data/input
     transformer:
+        build: ./transformer
         depends_on:
             - generator
+        volumes:
+            - processed:/data/processed 
     loader:  
+        build: ./loader
         depends_on:
             - transformer
+        volumes:
+            - db:/data/db
     api:
+        build: ./api
         depends_on:
             - loader
-        build:
-        ports: "5000:5000"
+        ports:
+            - "5000:5000"
 
 volumes:
     raw:
     processed:
     db:
-
-
-# docker compose up
-
-# correct if 
