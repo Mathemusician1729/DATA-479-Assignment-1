@@ -8,17 +8,21 @@ services:
         depends_on:
             - generator
         volumes:
+            - raw:/data/input
             - processed:/data/processed 
     loader:  
         build: ./loader
         depends_on:
             - transformer
         volumes:
+            - processed:/data/processed 
             - db:/data/db
     api:
         build: ./api
         depends_on:
             - loader
+        volumes:
+            - db:/data/db
         ports:
             - "5000:5000"
 
