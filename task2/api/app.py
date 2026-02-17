@@ -45,6 +45,8 @@ def recent():
     if conn is None:
         return jsonify({"rows": []})
     df = pd.read_sql_query("SELECT * FROM records ORDER BY timestamp DESC LIMIT 10", conn)
+    print(df.iloc[0])
+    print(type(df.iloc[0]["id"]))
     return jsonify({"rows": df.to_dict(orient="records")})
 
 if __name__ == "__main__":
